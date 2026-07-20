@@ -5,12 +5,17 @@ import authRoute from "./routes/auth.js";
 
 import connectDB from "./config/db.js";
 
-dotenv.config();
 
 const app = express();
 
+dotenv.config();
+
 app.use(express.json());
 app.use("/api/auth", authRoute);
+
+app.get("/", (req, res) => {
+  res.send("Server is running");
+});
 
 const PORT = Number(process.env.PORT) || 5000;
 
