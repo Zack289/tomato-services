@@ -22,7 +22,7 @@ const schema = new Schema<IRestaurant>(
   {
     name: {
       type: String,
-      reequired: true,
+      required: true,
       trim: true,
     },
     description: String,
