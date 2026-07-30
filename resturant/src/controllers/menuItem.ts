@@ -60,7 +60,7 @@ export const addMenuItem = tryCatch(async (req: AuthenticatedRequest, res) => {
   res.json({ message: " Item Added Successfully", item });
 });
 
-//funtion toi fetch all the items
+//funtion to fetch all the items
 
 export const getAllItems = tryCatch(async (req: AuthenticatedRequest, res) => {
   const { id } = req.params;
@@ -114,6 +114,8 @@ export const deleteMenuItem = tryCatch(
     });
   },
 );
+
+//to toggle item avalability
 
 export const toggleMenuItemAvaliblity = tryCatch(
   async (req: AuthenticatedRequest, res) => {
