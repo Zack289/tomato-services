@@ -83,3 +83,86 @@ export const fetchMyCart = tryCatch(async (req: AuthenticatedRequest, res) => {
     cart: cartItems,
   });
 });
+
+export const incrementCartItem = tryCatch(
+  async (req: AuthenticatedRequest, res) => {
+    const userId = req.user?._id;
+
+    const { itemId } = req.body;
+
+    if (!userId || !itemId) {
+      return res.status(400).json({
+        message: "Invalid request",
+      });
+    }
+
+    const cartItem = await cart.findOneAndUpdate(
+      { userId, itemId },
+      { $inc: { quantity: 1 } },
+      { new: true },
+    );
+
+    if (!cartItem) {
+      return res.status(404).json({
+        message: "Item not found",
+      });
+    }
+
+    res.json({
+      message: "Quantity increased",
+      cartItem,
+    });
+  },
+);
+export const decrementCartItem = tryCatch(
+  async (req: AuthenticatedRequest, res) => {
+    const userId = req.user?._id;
+
+    const { itemId } = req.body;
+
+    if (!userId || !itemId) {
+      return res.status(400).json({
+        message: "Invalid request",
+      });
+    }
+
+    const cartItem = await cart.findOne({ userId, itemId });
+
+    if (!cartItem) {
+      return res.status(404).json({
+        message: "Item not found",
+      });
+    }
+
+    if (cartItem.quantity === 1) {
+      await cart.deleteOne({ userId, itemId });
+
+      return res.json({
+        message: "Item removed from cart",
+      });
+    }
+
+    cartItem.quantity -= 1;
+    await cartItem.save();
+
+    res.json({
+      message: "Quantity decreased",
+      cartItem,
+    });
+  },
+);
+
+//function to clear cart
+export const clearCart = tryCatch(async (req: AuthenticatedRequest, res) => {
+  const userId = req.user?._id;
+
+  if (!userId) {
+    return res.status(401).json({
+      message: "Unauthorized",
+    });
+  }
+
+  await cart.deleteMany({ userId });
+
+  res.json({ message: "Cart cleared successfully" });
+});

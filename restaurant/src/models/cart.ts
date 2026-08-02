@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface ICart extends Document {
-  userID: mongoose.Types.ObjectId;
+  userId: mongoose.Types.ObjectId;
   restaurantId: mongoose.Types.ObjectId;
   itemId: mongoose.Types.ObjectId;
   quantity: number;
@@ -11,7 +11,7 @@ export interface ICart extends Document {
 
 const schema = new Schema<ICart>(
   {
-    userID: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -39,6 +39,6 @@ const schema = new Schema<ICart>(
   { timestamps: true },
 );
 
-schema.index({ userId: 1, restaurant: 1, itemId: 1 }, { unique: true }); //simply gave unique attribute to all of the data
+schema.index({ userId: 1, restaurantId: 1, itemId: 1 }, { unique: true }); //simply gave unique attribute to all of the data
 
 export default mongoose.model<ICart>("Cart", schema);
