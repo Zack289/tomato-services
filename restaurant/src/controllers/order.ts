@@ -163,6 +163,6 @@ export const fetchOrderForPayment = tryCatch(async (req, res) => {
   res.json({
     orderId: order._id,
     amount: order.totalAmount,
-    currency: "NPR" 
+    currency: "INR" 
   })
 });
