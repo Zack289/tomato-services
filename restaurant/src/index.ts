@@ -16,8 +16,12 @@ const app = express();
 
 dotenv.config();
 
-await connectRabbitMQ();
-startPaymentConsumer();
+try {
+  await connectRabbitMQ();
+  startPaymentConsumer();
+} catch (error) {
+  console.error("Failed to connect to RabbitMQ, continuing without consumer:", error);
+}
 
 app.use(cors());
 
