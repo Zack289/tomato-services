@@ -122,9 +122,9 @@ export const verifyStripe = async (req: Request, res: Response) => {
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    if (!session) {
+    if (!session || session.payment_status !== "paid") {
       return res.status(400).json({
-        message: "Payment verification failed",
+        message: "Stripe payment not completed",
       });
     }
 
@@ -146,6 +146,7 @@ export const verifyStripe = async (req: Request, res: Response) => {
       message: "Payment verified successfully",
     });
   } catch (error) {
+    console.error("Stripe verification error:", error);
     res.status(500).json({
       message: "Stripe payment failed",
     });
