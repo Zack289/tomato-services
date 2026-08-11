@@ -18,7 +18,7 @@ const server = http.createServer(app);
 
 initSocket(server);
 
-const PORT = Number(process.env.PORT) || 5003;
+const PORT = Number(process.env.PORT) || 5004;
 
 server.listen(PORT, () => {
   console.log(`Realtime service running on port ${PORT}`);

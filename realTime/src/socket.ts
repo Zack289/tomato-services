@@ -25,7 +25,7 @@ export const initSocket = (server: http.Server) => {
         return next(new Error("Unauthorized"));
       }
 
-      socket.data.user(decoded.user);
+      socket.data.user = decoded.user;
 
       next();
     } catch (error) {
