@@ -47,7 +47,7 @@ export const startPaymentConsumer = async () => {
       await await axios.post(
         `${process.env.REALTIME_SERVICE}/api/v1/internal/emit`,
         {
-          event: "Order:new",
+          event: "order:new",
           room: `restaurant:${order.restaurantId}`,
           payload: {
             orderId: order._id,
@@ -62,7 +62,7 @@ export const startPaymentConsumer = async () => {
 
       channel.ack(msg);
     } catch (error) {
-      console.error("❌Payment consumer eror", error);
+      console.error("❌Payment consumer error", error);
     }
   });
 };

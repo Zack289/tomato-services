@@ -287,7 +287,7 @@ export const updateOrderStatus = tryCatch(
     await axios.post(
       `${process.env.REALTIME_SERVICE}/api/v1/internal/emit`,
       {
-        event: "Order:update",
+        event: "order:update",
         room: `user:${order.userId}`,
         payload: {
           orderId: order._id,
