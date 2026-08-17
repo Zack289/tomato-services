@@ -260,9 +260,9 @@ export const fetchMyCurrentOrder = tryCatch(
       res.json({
         order: data,
       });
-    } catch (error) {
+    } catch (error: any) {
       res.status(500).json({
-        message: "Internal server error",
+        message: error.response.data.message,
       });
     }
   },
