@@ -238,7 +238,7 @@ export const fetchMyCurrentOrder = tryCatch(
 
     const rider = await Rider.findOne({
       userId: riderUserId,
-      isAvailable: true,
+      isVerified: true,
     });
 
     if (!rider) {

@@ -4,11 +4,13 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import riderRoutes from "./routes/rider.js";
 import { connectRabbitMQ } from "./config/rabbitmq.js";
+import { startOrderReadyConsumer } from "./config/orderReady.consumer.js";
 
 dotenv.config();
 
 try {
   await connectRabbitMQ();
+  startOrderReadyConsumer();
 } catch (error) {
   console.error(
     "Failed to connect to RabbitMQ, continuing without consumer:",
